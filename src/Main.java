@@ -18,7 +18,7 @@ public class Main {
 
             System.out.println("Победил поток А!");
         }
-        else	//если оппонент уже закончил высказываться
+        else
         {
             System.out.println("Победил поток Б!");
         }
