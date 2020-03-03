@@ -1,26 +1,48 @@
 public class Main {
     public static void main(String[] args) {
-        Run run = new Run();
-        run.start();
+        MyThreadOne threadOne = new MyThreadOne();
+        MyThreadTwo threadTwo = new MyThreadTwo();
+        threadOne.start();
+        threadTwo.start();
+    }
 
-
-        for (int i = 1; i <= 100; i++) {
-            System.out.println("Поток А: " + i);
-            if (i == 100){
-                System.out.println("Поток А завершился");
+    public static class MyThreadOne extends Thread {
+        @Override
+        public void run() {
+            for (int i = 1; i <= 100; i++) {
+                System.out.println("Поток А: " + i);
+                if (i == 100) {
+                    System.out.println("Поток А завершился");
+                }
+                check();
             }
         }
-        if(run.isAlive())
-        {
-            try{
-                run.join();
-            }catch(InterruptedException e){}
+    }
 
-            System.out.println("Победил поток А!");
+    public static class MyThreadTwo extends Thread {
+        @Override
+        public void run() {
+
+            for (int i = 1; i <= 100; i++) {
+                System.out.println("Поток Б: " + i);
+                if (i == 100) {
+                    System.out.println("Поток Б завершился");
+                }
+            }
         }
-        else	//если оппонент уже закончил высказываться
-        {
+    }
+
+    public static void check() {
+        if (threadOne.isAlive()) {
+            try {
+                threadOne.join();
+            } catch (InterruptedException e) {
+            }
+            System.out.println("Победил поток А!");
+        } else {
             System.out.println("Победил поток Б!");
         }
     }
 }
+
+
